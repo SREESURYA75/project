@@ -1,0 +1,28 @@
+.read1 {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ffffff; 
+    width: 100%;
+    max-width: 1100px;
+    height: 500px; 
+    background-image: url("../Image/1BEB0ACA-9E35-4EC9-AF3E-3D69BFF7E724_1200x12001.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right: 5%;
+    padding-left: 5%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.content {
+    width: 70%;
+    height: 70px;
+    
+    border-width: 1px;
+    border-color: #ffffff;
+    color: beige;
+    margin: 0 auto; 
+    margin-top: 20px; 
+    transform: translateY(360%);
+}

@@ -1,0 +1,18 @@
+.Last {
+    font-size: 20px;
+    font-weight: 600;
+    /* transform: translateY(10%); */
+}
+
+.Line {
+    width: 10%;
+    border-style: solid;
+    border-radius: 20px;
+}
+
+/* Additional styles for responsiveness */
+@media (max-width: 768px) {
+    .Last {
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
+}

@@ -1,0 +1,32 @@
+
+.Imgvar {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.productname {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.Size {
+    margin-bottom: 20px;
+}
+
+.image1 {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 320px) {
+    .Imgvar {
+        height: 80px;
+        width: 100%;
+    }
+    .cent {
+        margin-left: 30px;
+    }
+}

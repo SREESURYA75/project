@@ -1,0 +1,17 @@
+.form-group{
+	width:100%;
+}
+.card{
+	padding: 5px;
+}
+.form-control{
+	margin-top: 8px;
+}
+.btn{
+
+	float: right;
+	margin-top: 5px;
+}
+.bg-light {
+	transform: translateY(-4%);
+}

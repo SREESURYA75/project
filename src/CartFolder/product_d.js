@@ -1,9 +1,25 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import Detail from "./productdetail";
 import './Cart.css';
 
 const Product_d = ({ addToCart }) => {
+    const navigate = useNavigate();
+
+    const handleAddToWishlist = (item) => {
+        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        if (isAuthenticated) {
+            addToCart(item); // Assuming addToCart adds to wishlist
+        } else {
+            // Save the intended action and item to local storage
+            localStorage.setItem('wishlistItem', JSON.stringify(item));
+            localStorage.setItem('redirectPath', '/wishlist'); // Adjust as needed for your wishlist route
+            alert("Please login to continue.");
+            navigate('/login');
+        }
+    };
+
     return (
         <section style={{ backgroundColor: '#eee' }}>
             <Container className="py-5">
@@ -62,7 +78,7 @@ const Product_d = ({ addToCart }) => {
                                             <h6 className="text-success">Free shipping</h6>
                                             <div className="d-flex flex-column mt-4">
                                                 <Button variant="primary" size="sm">Details</Button>
-                                                <Button variant="outline-primary" size="sm" className="mt-2" onClick={() => addToCart(item)}>
+                                                <Button variant="outline-primary" size="sm" className="mt-2" onClick={() => handleAddToWishlist(item)}>
                                                     Add to wishlist
                                                 </Button>
                                             </div>

@@ -8,36 +8,20 @@ import Maps from './Map';
 import Footer from './Footer';
 import Contact from './Contact';
 
-
-
-
-
-
-
-
-
-function Homepage(){
-    return(<div>
-        <Container fluid className="pic1">
-                <h2 className='letter'># Find Your Tribe </h2>
-                
-            <p className='letter1'>Discover the true spirit of Mountain Terrain bike with your tribe</p>
-        
-        
-       
-        
-        
-        </Container>
-        <About/>
-        <Service/>
-        <Contact/>
-        <Maps/>
-        <Footer/>
-        
-        
-        
-        </div>
-    
-    )
+function Homepage() {
+  return (
+    <div>
+      <Container fluid className="pic1">
+        <h2 className='letter'># Find Your Tribe </h2>
+        <p className='letter1'>Discover the true spirit of Mountain Terrain bike with your tribe</p>
+      </Container>
+      <About />
+      <Service />
+      <Contact />
+      <Maps />
+      <Footer />
+    </div>
+  );
 }
+
 export default Homepage;

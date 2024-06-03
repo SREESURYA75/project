@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import './Cart.css';
 
 const Cart = ({ cartItems, handleIncrement, handleDecrement }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
     const totalAmount = cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
 
-    return (
+    useEffect(() => {
+        const loggedIn = localStorage.getItem('isAuthenticated') === 'true';
+        if (!loggedIn) {
+            alert("Please login to access the page.");
+            navigate('/login');
+        } else {
+            setIsAuthenticated(true);
+        }
+    }, [navigate]);
+
+    const handleCheckout = () => {
+        if (!isAuthenticated) {
+            alert("Please login to checkout.");
+            navigate('/login');
+        } else {
+            alert("Checkout successful!");
+        }
+    };
+
+    return isAuthenticated ? (
         <section className="h-100 h-custom">
             <div className="container h-100 py-5">
                 <div className="row d-flex justify-content-center align-items-center h-100">
@@ -22,7 +44,7 @@ const Cart = ({ cartItems, handleIncrement, handleDecrement }) => {
                                 <tbody>
                                     {cartItems.map((item, index) => (
                                         <tr key={index}>
-                                            <th scope="row">
+                                            <td>
                                                 <div className="d-flex align-items-center">
                                                     <img src={item.Img} className="img-fluid rounded-3" style={{ width: "120px" }} alt={item.Title} />
                                                     <div className="flex-column ms-4">
@@ -30,23 +52,29 @@ const Cart = ({ cartItems, handleIncrement, handleDecrement }) => {
                                                         <p className="mb-0">{item.Author}</p>
                                                     </div>
                                                 </div>
-                                            </th>
-                                            <td className="align-middle">
-                                                <p className="mb-0" style={{ fontWeight: 500 }}>{item.Format}</p>
                                             </td>
-                                            <td className="align-middle">
-                                                <div className="d-flex flex-row">
+                                            <td>
+                                                <p style={{ fontWeight: 500 }}>{item.Format}</p>
+                                            </td>
+                                            <td>
+                                                <div className="d-flex flex-row align-items-center">
                                                     <button className="btn btn-link px-2" onClick={() => handleDecrement(index)}>
                                                         <i className="fas fa-minus"></i>
                                                     </button>
-                                                    <input id="form1" min="0" name="quantity" value={item.quantity} type="number" className="form-control form-control-sm" style={{ width: "50px" }} readOnly />
+                                                    <input
+                                                        type="number"
+                                                        className="form-control form-control-sm"
+                                                        value={item.quantity}
+                                                        readOnly
+                                                        style={{ width: "50px", textAlign: "center" }}
+                                                    />
                                                     <button className="btn btn-link px-2" onClick={() => handleIncrement(index)}>
                                                         <i className="fas fa-plus"></i>
                                                     </button>
                                                 </div>
                                             </td>
-                                            <td className="align-middle">
-                                                <p className="mb-0" style={{ fontWeight: 500 }}>${item.Price.toFixed(2)}</p>
+                                            <td>
+                                                <p style={{ fontWeight: 500 }}>${(item.Price * item.quantity).toFixed(2)}</p>
                                             </td>
                                         </tr>
                                     ))}
@@ -59,34 +87,24 @@ const Cart = ({ cartItems, handleIncrement, handleDecrement }) => {
                                 <div className="row">
                                     <div className="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
                                         <form>
-                                            <div className="d-flex flex-row pb-3">
-                                                <div className="d-flex align-items-center pe-2">
-                                                    <input className="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="creditCard" checked />
-                                                </div>
-                                                <div className="rounded border w-100 p-3">
-                                                    <p className="d-flex align-items-center mb-0">
+                                            <div className="d-flex flex-column pb-3">
+                                                <div className="d-flex align-items-center pb-2">
+                                                    <input className="form-check-input me-2" type="radio" name="paymentMethod" id="creditCard" value="creditCard" checked />
+                                                    <label className="form-check-label" htmlFor="creditCard">
                                                         <i className="fab fa-cc-mastercard fa-2x text-dark pe-2"></i>Credit Card
-                                                    </p>
+                                                    </label>
                                                 </div>
-                                            </div>
-                                            <div className="d-flex flex-row pb-3">
-                                                <div className="d-flex align-items-center pe-2">
-                                                    <input className="form-check-input" type="radio" name="paymentMethod" id="debitCard" value="debitCard" />
+                                                <div className="d-flex align-items-center pb-2">
+                                                    <input className="form-check-input me-2" type="radio" name="paymentMethod" id="debitCard" value="debitCard" />
+                                                    <label className="form-check-label" htmlFor="debitCard">
+                                                        <i className="fab fa-cc-visa fa-2x text-dark pe-2"></i>Debit Card
+                                                    </label>
                                                 </div>
-                                                <div className="rounded border w-100 p-3">
-                                                    <p className="d-flex align-items-center mb-0">
-                                                        <i className="fab fa-cc-visa fa-2x fa-lg text-dark pe-2"></i>Debit Card
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="d-flex flex-row">
-                                                <div className="d-flex align-items-center pe-2">
-                                                    <input className="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal" />
-                                                </div>
-                                                <div className="rounded border w-100 p-3">
-                                                    <p className="d-flex align-items-center mb-0">
-                                                        <i className="fab fa-cc-paypal fa-2x fa-lg text-dark pe-2"></i>PayPal
-                                                    </p>
+                                                <div className="d-flex align-items-center">
+                                                    <input className="form-check-input me-2" type="radio" name="paymentMethod" id="paypal" value="paypal" />
+                                                    <label className="form-check-label" htmlFor="paypal">
+                                                        <i className="fab fa-cc-paypal fa-2x text-dark pe-2"></i>PayPal
+                                                    </label>
                                                 </div>
                                             </div>
                                         </form>
@@ -129,7 +147,7 @@ const Cart = ({ cartItems, handleIncrement, handleDecrement }) => {
                                             <p className="mb-2">Total (tax included)</p>
                                             <p className="mb-2">${(totalAmount + 2.99).toFixed(2)}</p>
                                         </div>
-                                        <button type="button" className="btn btn-primary btn-block btn-lg">
+                                        <button type="button" className="btn btn-primary btn-block btn-lg" onClick={handleCheckout}>
                                             <div className="d-flex justify-content-between">
                                                 <span>Checkout</span>
                                                 <span>${(totalAmount + 2.99).toFixed(2)}</span>
@@ -139,12 +157,11 @@ const Cart = ({ cartItems, handleIncrement, handleDecrement }) => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
-    );
+    ) : null;
 };
 
 export default Cart;

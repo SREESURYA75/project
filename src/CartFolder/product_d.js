@@ -1,23 +1,11 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import Detail from "./productdetail";
 import './Cart.css';
+import Detail from "./productdetail";
 
 const Product_d = ({ addToCart }) => {
-    const navigate = useNavigate();
-
     const handleAddToWishlist = (item) => {
-        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-        if (isAuthenticated) {
-            addToCart(item); // Assuming addToCart adds to wishlist
-        } else {
-            // Save the intended action and item to local storage
-            localStorage.setItem('wishlistItem', JSON.stringify(item));
-            localStorage.setItem('redirectPath', '/wishlist'); // Adjust as needed for your wishlist route
-            alert("Please login to continue.");
-            navigate('/login');
-        }
+        addToCart(item); 
     };
 
     return (
@@ -31,7 +19,11 @@ const Product_d = ({ addToCart }) => {
                                     <Row>
                                         <Col md={12} lg={3} xl={3} className="mb-4 mb-lg-0">
                                             <div className="bg-image hover-zoom ripple rounded ripple-surface">
-                                                <img src={item.Img} className="w-100" alt={item.Title} />
+                                                <img 
+                                                    src={item.Img} 
+                                                    className="w-100" 
+                                                    alt={item.Title} 
+                                                />
                                                 <a href="#!">
                                                     <div className="hover-overlay">
                                                         <div className="mask" style={{ backgroundColor: 'rgba(253, 253, 253, 0.15)' }}></div>

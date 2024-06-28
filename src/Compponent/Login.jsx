@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { FloatingLabel, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
+import { addToCart } from '../CartFolder/Cartutilis';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -17,24 +19,23 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // In your login component after successful login
-const handleLogin = () => {
-  // Perform login logic here
 
-  // Redirect to the intended path after login
-  const redirectPath = localStorage.getItem('redirectPath') || '/';
-  const wishlistItem = JSON.parse(localStorage.getItem('wishlistItem'));
+  const handleLogin = () => {
+    // Perform login logic here
 
-  // Perform the intended action (e.g., adding to wishlist)
-  if (wishlistItem) {
+    // Redirect to the intended path after login
+    const redirectPath = localStorage.getItem('redirectPath') || '/';
+    const wishlistItem = JSON.parse(localStorage.getItem('wishlistItem'));
+
+    // Perform the intended action (e.g., adding to wishlist)
+    if (wishlistItem) {
       addToCart(wishlistItem); // Assuming addToCart adds to wishlist
       localStorage.removeItem('wishlistItem'); // Clear the wishlist item
-  }
+    }
 
-  localStorage.removeItem('redirectPath'); // Clear the redirect path
-  navigate(redirectPath);
-};
-
+    localStorage.removeItem('redirectPath'); // Clear the redirect path
+    navigate(redirectPath);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +49,7 @@ const handleLogin = () => {
       alert("Login successful!");
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('userEmail', email);
-      navigate('/cart');
+      handleLogin();
     } else {
       alert("Invalid email or password. Please try again.");
     }

@@ -3,7 +3,6 @@ import './Home.css';
 import { Container } from 'react-bootstrap';
 import About from './About';
 import Service from './Service';
-import Section1 from '../Section1';
 import Maps from './Map';
 import Footer from './Footer';
 import Contact from './Contact';
